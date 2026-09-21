@@ -4,11 +4,5 @@
     "api/index.py": {
       "excludeFiles": "{tests/**,__tests__/**,**/*.test.py,**/test_*.py}"
     }
-  },
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/api/index.py"
-    }
-  ]
+  }
 }
