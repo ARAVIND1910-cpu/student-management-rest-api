@@ -1,9 +1,19 @@
 import os
+from pathlib import Path
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
 
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./students.db")
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+if not DATABASE_URL:
+    # Vercel's deployed function filesystem is read-only except for /tmp.
+    # Use /tmp for the SQLite demo; local development uses ./students.db.
+    DATABASE_URL = (
+        "sqlite:////tmp/students.db"
+        if os.getenv("VERCEL")
+        else "sqlite:///./students.db"
+    )
 
 connect_args = {"check_same_thread": False} if DATABASE_URL.startswith("sqlite") else {}
 
